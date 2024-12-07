@@ -1,5 +1,5 @@
 from .models import Post
-from .forms import CreatePostForm
+from .forms import CreatePostForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
@@ -74,4 +74,24 @@ def create_posts_view(request):
 @login_required
 def post_detial_view(request, post_id):
     post = get_object_or_404(Post, id=post_id, is_published=True)
-    return render(request, 'blogs/post_detail.html', {'post': post})
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post =  post
+            comment.author = request.user
+            comment.save()
+            messages.success(request, "Commented Successfully")
+            return redirect('post_detail', post_id=post_id)
+        else:
+            messages.error(request, "Please fill the field")
+    else:
+        form = CommentForm()
+        
+    comments = post.comments.all()
+    context = {
+        'post': post,
+        'comments': comments,
+        'form': form
+    }
+    return render(request, 'blogs/post_detail.html', context)

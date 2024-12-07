@@ -3,10 +3,42 @@
 {% block contents %}
 <article class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-20">
     <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ post.title }}</h1>
-    <p class="text-gray-600 mb-6">Published: {{ post.created_at }}</p> {# Added publication date #}
-    <div class="prose prose-lg text-gray-800"> {# Uses built-in Prose styles #}
+    <p class="text-gray-600 mb-6">Published: {{ post.created_at }}</p>
+    <div class="prose prose-lg text-gray-800">
         {{ post.content|safe }}
     </div>
+
+    <div class="mt-8">
+
+        <h2 class="text-xl text-gray-800 mb-4 font-bold">Comments</h2>
+        {% for comment in comments %}
+        <div class="border-b border-gray-200 pb-4 mb-4 bg-gray-100 px-2 py-4">
+            <p class="text-gray-800 font-medium">{{ comment.author }} comment:</p>
+            <div class="w-full flex items-center justify-between">
+                <p class="text-gray-700">{{ comment.content }}</p>
+                <p class="text-gray-600 text-xs">{{ comment.created_at }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-2">
+                <label for="id_content" class="text-gray-800">Content</label>
+                <textarea name="content" aria-label="content" id="id_content"
+                    class="w-full border px-4 py-2"></textarea>
+                {% if form.content.errors %}
+                <p class="text-sm text-red-600 mt-2">{{ form.content.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded text-white" required
+                aria-invalid="true" spellcheck="false">Add
+                Comment</button>
+        </form>
+    </div>
+
     <div class="mt-6">
         <a href="{% url 'home' %}" class="text-green-600 hover:underline">Back to Blog</a>
     </div>
