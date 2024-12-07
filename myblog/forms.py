@@ -1,10 +1,20 @@
 from django import forms
-from .models import Posts
+from .models import Post, Comment
 
-class CreatePost(forms.ModelForm):
+class CreatePostForm(forms.ModelForm):
     class Meta:
-        model = Posts
+        model = Post
         fields = [
             'title',
-            'content'
+            'content',
+            'image',
+            'is_published'
+        ]
+        
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'content',
         ]

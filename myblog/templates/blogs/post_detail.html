@@ -1,0 +1,14 @@
+{% extends "blogs/base.html" %}
+{% block title %}{{ post.title }}{% endblock title %}
+{% block contents %}
+<article class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-20">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ post.title }}</h1>
+    <p class="text-gray-600 mb-6">Published: {{ post.created_at }}</p> {# Added publication date #}
+    <div class="prose prose-lg text-gray-800"> {# Uses built-in Prose styles #}
+        {{ post.content|safe }}
+    </div>
+    <div class="mt-6">
+        <a href="{% url 'home' %}" class="text-green-600 hover:underline">Back to Blog</a>
+    </div>
+</article>
+{% endblock contents %}

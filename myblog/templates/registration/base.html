@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock title %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 font-sans">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow-md">
+      {% if messages %}
+      <div class="container mx-auto">
+        {% for message in messages %}
+        <div
+          class="{% if message.tags == 'success' %} bg-green-100 text-green-800 border-green-300 {% elif message.tags == 'error'%} bg-red-100 text-red-800 border-red-300 {% else %} bg-gray-100 text-gray-800 border-gray-300 {% endif %} border-l-4 p-4 mb-5 rounded"
+        role="alert">
+          <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %} {% block contents %}{% endblock contents %}
+    </div>
+  </body>
+</html>
