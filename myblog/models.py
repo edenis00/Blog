@@ -3,6 +3,15 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
+#Table for Categroies
+class Category(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    
+    def __str__(self):
+        return self.name
+
+
 # Table for posts
 class Post(models.Model):
     title = models.CharField(max_length=255)
@@ -12,9 +21,11 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images/', blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):
         return self.title
+
 
 # Table for comments   
 class Comment(models.Model):
@@ -25,3 +36,5 @@ class Comment(models.Model):
     
     def __str__(self):
         return f"{self.author.username} commented on {self.content}"
+    
+    

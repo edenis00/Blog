@@ -1,18 +1,18 @@
-{% extends "blogs/base.html" %}
-
-{% block title %}Home{% endblock title %}
-
+{% extends "blogs/base.html" %} {% block title %}Home{% endblock title %}
 {% block contents %}
 <header class="bg-green-600 text-white py-20">
-    <div class=" container mx-auto px-4 text-center">
-        <h1 class="text-5xl font-bold transition-transform duration-500 hover:scale-105">Welcome to My Blog</h1>
-        <p class="text-xl mt-2 font-semibold">Tech insights, tutorials, and the latest updates.</p>
+    <div class="container mx-auto px-4 text-center">
+        <h1 class="text-5xl font-bold transition-transform duration-500 hover:scale-105">
+            Welcome to My Blog
+        </h1>
+        <p class="text-xl mt-2 font-semibold">
+            Tech insights, tutorials, and the latest updates.
+        </p>
     </div>
 </header>
 
-
 <!-- Main Content Section -->
-<main class="container mx-auto px-4 py-8 ">
+<main class="container mx-auto px-4 py-8">
     <h2 class="text-gray-800 font-semibold text-3xl mb-6">Latest Posts</h2>
 
     <!-- Blog Post Grid with hover effects -->
@@ -21,17 +21,22 @@
         <div
             class="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
             <div class="relative">
-                <img src="{{ post.image_url }}" alt="Post Image" class="w-full h-56 object-cover">
+                <img src="{{ post.image_url }}" alt="Post Image" class="w-full h-56 object-cover" />
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                     <h3 class="text-xl text-white font-bold">
                         <a href="{% url 'post_detail' post.id %}"
                             class="hover:text-green-600 transition-colors duration-300">{{ post.title }}</a>
                     </h3>
-                    <p class="text-sm text-gray-400">{{ post.created_at }} | by {{ post.author }}</p>
+                    <p class="text-sm text-gray-400">
+                        {{ post.created_at }} | by {{ post.author }}
+                    </p>
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-gray-600">{{ post.content|truncatewords:20 }}</p>
+                <a href="3" class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center">
+                    {{post.category }}
+                </a>
+                <p class="text-gray-600 mt-2">{{ post.content|truncatewords:20 }}</p>
                 <a href="{% url 'post_detail' post.id %}"
                     class="text-green-600 font-semibold hover:underline mt-4 block">Read More →</a>
             </div>
@@ -41,20 +46,16 @@
 
     <!-- Categories Section -->
     <div id="categories" class="py-8 mt-12">
-        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Popular Categories</h3>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">
+            Popular Categories
+        </h3>
         <div class="flex gap-6 overflow-x-auto">
+            {% for category in categories %}
             <div
-                class="category-card bg-green-600 text-white py-4 px-8 rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300">
-                <h4 class="font-semibold">Tech</h4>
+                class="category-card bg-green-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300">
+                <h4 class="font-semibold">{{category}}</h4>
             </div>
-            <div
-                class="category-card bg-blue-600 text-white py-4 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-300">
-                <h4 class="font-semibold">Lifestyle</h4>
-            </div>
-            <div
-                class="category-card bg-yellow-600 text-white py-4 px-8 rounded-lg shadow-lg hover:bg-yellow-700 transition-colors duration-300">
-                <h4 class="font-semibold">Travel</h4>
-            </div>
+            {% endfor %}
         </div>
     </div>
 

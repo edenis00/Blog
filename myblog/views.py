@@ -1,4 +1,4 @@
-from .models import Post
+from .models import Post, Category
 from .forms import CreatePostForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -19,6 +19,7 @@ def register_view(request):
             return redirect('login')
         else:
             messages.error(request, 'Registraion Failed. Please try again')
+            return render(request, 'registration/register.html', {'form': form})
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html')
@@ -50,24 +51,36 @@ def logout_view(request):
 # Dashboard view
 def home_view(request):
     posts = Post.objects.filter(is_published=True).order_by('-created_at')
-    return render(request, 'blogs/index.html', {'posts': posts})
+    categories = Category.objects.all()
+    
+    context = {
+        'posts': posts,
+        'categories': categories
+    }
+    
+    return render(request, 'blogs/index.html', context)
 
 #Create post
 @login_required
 def create_posts_view(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
         form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            
             messages.success(request,'Post created successfully')
             return redirect('post_detail', post_id=post.id)
         else:
             messages.error(request, 'Post Creation Failed. Please try again')
+            return render(request, 'blogs/create_post.html', context)
     else:
         form = CreatePostForm()
-    return render(request, 'blogs/create_post.html', {'form':form})
+        
+    context = {'form': form, 'categories': categories}
+    return render(request, 'blogs/create_post.html', context)
 
 
 # Post detail views
@@ -85,6 +98,7 @@ def post_detial_view(request, post_id):
             return redirect('post_detail', post_id=post_id)
         else:
             messages.error(request, "Please fill the field")
+            return render(request, 'blogs/post_detail.html', context)
     else:
         form = CommentForm()
         
@@ -92,6 +106,32 @@ def post_detial_view(request, post_id):
     context = {
         'post': post,
         'comments': comments,
-        'form': form
+        'form': form,
     }
     return render(request, 'blogs/post_detail.html', context)
+
+#Edit Post by author
+@login_required
+def edit_post_view(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.user != post.author:
+        messages.error(request, 'You don\' have permission to edit this post' )
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form  = CreatePostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            post = form.save()
+            messages.success(request, "Post updated successfully")
+            return redirect('post_detial', post_id)
+        else:
+            messages.error(request, "Postt updated failed. Please try again")
+            return render(request, 'blogs/edit_detail.html', context)
+    else:
+        form = CreatePostForm(instance=post)
+        
+    context = {
+        'post': post,
+        'form': form
+    }
+    return render(request, 'blogs/edit_detail.html', context)

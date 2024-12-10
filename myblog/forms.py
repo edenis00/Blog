@@ -7,6 +7,7 @@ class CreatePostForm(forms.ModelForm):
         fields = [
             'title',
             'content',
+            'category',
             'image',
             'is_published'
         ]
@@ -15,4 +16,7 @@ class CreatePostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']    
+        fields = ['content']
+        widget = {
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write your comments here'}),
+        }

@@ -1,5 +1,8 @@
-{% extends "blogs/base.html" %} {% block contents %}
-<div class="max-w-md mx-auto px-4 py-4 mt-5 bg-white shadow-md rounded-md">
+{% extends "blogs/base.html" %}
+{% block title %} {{ post.title }} {% endblock title %}
+{% block contents %}
+<div class="max-w-md mx-auto px-4 py-4 mt-20 bg-white shadow-md rounded-md">
+
     {% if messages %}
     <div class="container mx-auto">
         {% for message in messages %}
@@ -12,12 +15,12 @@
     {% endif %}
 
     <h2 class="text-2xl font-bold text-green-800">Create Post</h2>
-    <form action="{% url 'create' %}" method="post" enctype="multipart/form-data" class="space-y-6">
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
         {% csrf_token %}
         <div class="mb-2">
             <label for="title" class="text-gray-900 font-medium block text-sm">Title</label>
             <input type="text" class="w-full p-2 rounded-md border block mt-1 shadow-sm border-gray-300" name="title"
-                id="title" value="{{ form.title.value|default:'' }}" aria-label="Title" />
+                id="title" value="{{ form.title.value|default:'' }}" aria-label="Title" required />
 
             {% if form.title.errors %}
             <p class="text-sm text-red-600 mt-1">{{ form.title.errors.0 }}</p>
@@ -25,9 +28,10 @@
         </div>
 
         <div class="mb-2">
-            <label for="content" class="text-gray-800 text-sm font-medium block">Content</label>
-            <textarea name="content" id="content" class="w-full border shadow-sm p-2 border-gray-300 rounded-md"
-                aria-label="Content">
+            <label for="id_content" class="text-gray-800 text-sm font-medium block">Content</label>
+            <textarea name="content" spellcheck="false" id="id_content"
+                class="w-full border shadow-sm p-2 border-gray-300 rounded-md" aria-label="Content" required>
+                {{ form.content.value|default:'' }}
             </textarea>
             {% if form.content.error %}
             <p class="text-red-600 mt-1 text-sm">{{ form.content.error.0 }}</p>
@@ -51,19 +55,20 @@
 
         <div class="mb-2">
             <label for="id_is_published">Publish</label>
-            <input type="checkbox" name="is_published" id="id_is_published" aria-label="Publish">
+            <input type="checkbox" name="is_published" id="id_is_published" aria-label="Publish" checked>
         </div>
 
         <!-- {{ form.as_div }} -->
 
         <button type="submit"
             class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:ring-green-300">
-            Create Post
+            Update Post
         </button>
     </form>
     <div class="text-center mt-4">
         <a href="{% url 'home' %}" class="text-green-600 hover:underline">Back to Home</a>
     </div>
 </div>
+
 
 {% endblock contents %}
