@@ -1,5 +1,6 @@
 from django import forms
 from .models import Post, Comment
+from django.forms import ClearableFileInput
 
 class CreatePostForm(forms.ModelForm):
     class Meta:
@@ -11,6 +12,9 @@ class CreatePostForm(forms.ModelForm):
             'image',
             'is_published'
         ]
+        widget = {
+            'image': ClearableFileInput(attrs={'multiple': False})
+        }
         
         
 class CommentForm(forms.ModelForm):

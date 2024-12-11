@@ -6,9 +6,13 @@
         <a href="{% url 'edit_detail' post.id %}"
             class="bg-green-500 text-white font-bold py-2 px-2 hover:bg-green-600 rounded shadow-md">Edit</a>
     </div>
-    <img src="./{{ post.image }}" alt="Post Image" class="img-fluid mb-4">
+    <img src="../../../images/vlcsnap-2023-09-29-13h50m07s644.png" alt="" srcset="">
+
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="object-cover w-full mb-4">
+    {% endif %}
+
     <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ post.title }}</h1>
-    <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ post.image }}</h1>
     <a href="#"
         class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center hover:bg-green-600">
         {{post.category }}

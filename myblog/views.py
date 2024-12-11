@@ -114,6 +114,7 @@ def post_detial_view(request, post_id):
 @login_required
 def edit_post_view(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    categories = Category.objects.all()
     if request.user != post.author:
         messages.error(request, 'You don\' have permission to edit this post' )
         return redirect('home')
@@ -123,7 +124,7 @@ def edit_post_view(request, post_id):
         if form.is_valid():
             post = form.save()
             messages.success(request, "Post updated successfully")
-            return redirect('post_detial', post_id)
+            return redirect('post_detail', post_id)
         else:
             messages.error(request, "Postt updated failed. Please try again")
             return render(request, 'blogs/edit_detail.html', context)
@@ -132,6 +133,7 @@ def edit_post_view(request, post_id):
         
     context = {
         'post': post,
-        'form': form
+        'form': form,
+        'categories': categories
     }
     return render(request, 'blogs/edit_detail.html', context)
