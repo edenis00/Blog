@@ -1,0 +1,23 @@
+{% extends 'blogs/base.html' %}
+{% block contents %}
+<div class="mx-auto max-w-md px-3 py-6 bg-white shadow-lg rounded-md mt-20">
+  <h1 class="text-2xl text-gray-800 font-medium mb-5">Comment</h1>
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="mb-2">
+      <textarea name="content" aria-label="content" id="id_content" class="w-full border px-4 py-2">
+        {{ form.content.value|default:'' }}
+      </textarea>
+      {% if form.content.errors %}
+      <p class="text-sm text-red-600 mt-2">{{ form.content.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded text-white" required
+      aria-invalid="true" spellcheck="false">
+      Edit Comment
+    </button>
+  </form>
+</div>
+{% endblock contents %}

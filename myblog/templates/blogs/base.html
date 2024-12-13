@@ -75,8 +75,19 @@
       </div>
     </nav>
 
-    <div class="pt-16"></div>
-    {% block contents %}{% endblock contents %}
+    <div class="pt-16 mb-2"></div>
+    {% if messages %}
+    <div class="container mx-auto">
+      {% for message in messages %}
+      <div
+        class="{% if message.tags == 'success' %} bg-green-100 text-green-800 border-green-300 {% elif message.tags == 'error'%} bg-red-100 text-red-800 border-red-300 {% else %} bg-gray-100 text-gray-800 border-gray-300 {% endif %} border-l-4 p-4 mb-5 rounded"
+        role="alert"
+      >
+        <p>{{ message }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% block contents %}{% endblock contents %}
 
     <footer class="py-4">
       <div class="container mx-auto px-4 text-center">

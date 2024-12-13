@@ -1,4 +1,4 @@
-from .models import Post, Category
+from .models import Post, Category, Comment
 from .forms import CreatePostForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -115,6 +115,7 @@ def post_detial_view(request, post_id):
 def edit_post_view(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     categories = Category.objects.all()
+    
     if request.user != post.author:
         messages.error(request, 'You don\' have permission to edit this post' )
         return redirect('home')
@@ -137,3 +138,24 @@ def edit_post_view(request, post_id):
         'categories': categories
     }
     return render(request, 'blogs/edit_detail.html', context)
+
+
+#Edit Comment 
+@login_required
+def edit_comment_view(request,  id):
+    comment = get_object_or_404(Comment, id=id)
+    
+    if request.user != comment.author:
+        messages.error(request, "You don't have permission to edit this comment")
+        
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save()
+            messages.success(request, "Comment Updated successfully")
+            return redirect('post_detail', comment.post.id)
+        else:
+            messages.error(request, "Update failed. Please try again")
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, 'blogs/edit_comment.html', {'form': form})

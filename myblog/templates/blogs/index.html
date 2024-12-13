@@ -20,7 +20,13 @@
         <div
             class="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
             <div class="relative">
+
+                {% if post.image %}
                 <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-56 object-cover" />
+                {% else %}
+                <img src="{{ post.image }}" alt="{{ post.title }}" class="w-full h-56 object-cover" />
+                {% endif %}
+
                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
                     <h3 class="text-xl text-white font-bold">
                         <a href="{% url 'post_detail' post.id %}"
@@ -32,7 +38,7 @@
                 </div>
             </div>
             <div class="p-4">
-                <a href="3" class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center">
+                <a href="#" class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center">
                     {{post.category }}
                 </a>
                 <p class="text-gray-600 mt-2">{{ post.content|truncatewords:20 }}</p>
