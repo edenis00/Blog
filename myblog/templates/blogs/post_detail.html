@@ -1,70 +1,74 @@
 {% extends "blogs/base.html" %}
 {% block title %}{{ post.title }}{% endblock title %}
+
 {% block contents %}
 <article class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-20">
     <div class="text-end mb-2 relative">
+        {% if post.author == user %}
         <a href="{% url 'edit_post' post.id %}"
-            class="bg-green-500 text-white font-bold py-2 absolute top-0 right-0 px-2 hover:bg-green-600 rounded shadow-md z-50">Edit</a>
+            class="bg-green-500 text-white font-bold py-2 px-2 hover:bg-green-600 rounded shadow-md z-50">
+            Edit
+        </a>
+        {% endif %}
     </div>
 
     {% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-56 object-cover mb-4">
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-56 object-cover mb-4 rounded">
     {% endif %}
 
     <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ post.title }}</h1>
-    <a href="#"
-        class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center hover:bg-green-600">
-        {{post.category }}
+    <a href="#" class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 hover:bg-green-600">
+        {{ post.category }}
     </a>
     <p class="text-gray-600 text-sm mt-2">by {{ post.author }}</p>
     <p class="text-gray-600 mb-4 text-sm">Published: {{ post.created_at }}</p>
     <div class="prose prose-lg text-gray-800">
         {{ post.content|safe }}
     </div>
-    <hr class="mt-5">
-    <div class="mt-2">
 
-        <h2 class="text-xl text-gray-800 mb-4 font-bold">Comments</h2>
+    <hr class="mt-5 mb-1">
+    <section>
+        <h2 class="text-xl text-gray-800 mb-3 font-bold">Comments</h2>
 
+        {% if comments %}
         {% for comment in comments %}
-        <div class="border-b border-gray-200 bg-gray-100 px-4 py-3 mb-2 w-full max-w-sm rounded-lg">
+        <div class="border-b border-gray-200 bg-gray-100 px-4 py-2 mb-2 max-w-sm rounded-lg">
             <div>
                 <div class="flex justify-between items-center mb-2">
                     <p class="text-gray-800 font-bold text-lg mb-1">{{ comment.author }}</p>
-
+                    {% if comment.author == user %}
                     <a href="{% url 'edit_comment' comment.id %}"
                         class="bg-green-500 text-white font-bold py-1 px-2 hover:bg-green-600 rounded shadow-md">
                         Edit
                     </a>
+                    {% endif %}
                 </div>
-
-                <div class="flex items-start justify-between">
-                    <p class="text-gray-700">{{ comment.content }}</p>
-                </div>
+                <p class="text-gray-700">{{ comment.content }}</p>
             </div>
+            <p class="text-gray-600 text-xs mt-2">{{ comment.created_at }}</p>
         </div>
-
-        <p class="text-gray-600 text-xs px-1 mb-4">{{ comment.created_at }}</p>
         {% endfor %}
+        {% else %}
+        <p class="text-center text-gray-500 mb-2">No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </section>
 
-        <hr class="mt-5 mb-2">
-
-        <form method="post">
+    <hr class="mt-5 mb-4">
+    <section>
+        <form method="post" class="mt-4">
             {% csrf_token %}
-
             <div class="mb-2">
-                <textarea name="content" aria-label="content" id="id_content"
-                    class="w-full border px-4 py-2"></textarea>
+                {{ form.content }}
+
                 {% if form.content.errors %}
                 <p class="text-sm text-red-600 mt-2">{{ form.content.errors.0 }}</p>
                 {% endif %}
             </div>
-
-            <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded text-white" required
-                aria-invalid="true" spellcheck="false">Add
-                Comment</button>
+            <button type="submit" class="px-4 py-2 bg-green-500 hover:bg-green-600 rounded text-white">
+                Add Comment
+            </button>
         </form>
-    </div>
+    </section>
 
     <div class="text-center mt-6">
         <a href="{% url 'home' %}" class="text-green-600 hover:underline">Back to Blog</a>

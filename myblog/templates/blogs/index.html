@@ -1,8 +1,11 @@
-{% extends "blogs/base.html" %} {% block title %}Home{% endblock title %}
+{% extends "blogs/base.html" %}
+
+{% block title %}Home{% endblock title %}
+
 {% block contents %}
 <header class="bg-green-600 text-white py-20">
     <div class="container mx-auto px-4 text-center">
-        <h1 class="text-5xl font-bold transition-transform duration-500 hover:scale-105">
+        <h1 class="text-5xl font-bold transition-transform duration-500 hover:scale-105 leading-tight">
             Welcome to My Blog
         </h1>
         <p class="text-xl mt-2 font-semibold">
@@ -14,13 +17,12 @@
 <!-- Main Content Section -->
 <main class="container mx-auto px-4 py-8">
     <h2 class="text-gray-800 font-semibold text-3xl mb-6">Latest Posts</h2>
-    <!-- Blog Post Grid with hover effects -->
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {% for post in posts %}
         <div
             class="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
             <div class="relative">
-
                 {% if post.image %}
                 <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-56 object-cover" />
                 {% else %}
@@ -38,8 +40,9 @@
                 </div>
             </div>
             <div class="p-4">
-                <a href="#" class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center">
-                    {{post.category }}
+                <a href="#"
+                    class="inline bg-green-500 rounded-md text-white text-sm font-bold px-2 py-1 text-center hover:bg-green-600">
+                    {{ post.category }}
                 </a>
                 <p class="text-gray-600 mt-2">{{ post.content|truncatewords:20 }}</p>
                 <a href="{% url 'post_detail' post.id %}"
@@ -49,16 +52,35 @@
         {% endfor %}
     </div>
 
+    <!-- Pagination Section with custom styles -->
+    <div class="flex justify-center mt-8">
+        <div class="flex items-center space-x-4">
+            {% if posts.has_previous %}
+            <a href="?page=1"
+                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">First</a>
+            <a href="?page={{ posts.previous_page_number }}"
+                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Previous</a>
+            {% endif %}
+
+            <span class="text-gray-700">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+
+            {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}"
+                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Next</a>
+            <a href="?page={{ posts.paginator.num_pages }}"
+                class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Last</a>
+            {% endif %}
+        </div>
+    </div>
+
     <!-- Categories Section -->
     <div id="categories" class="py-8 mt-12">
-        <h3 class="text-2xl font-semibold text-gray-800 mb-6">
-            Popular Categories
-        </h3>
+        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Popular Categories</h3>
         <div class="flex gap-6 overflow-x-auto">
             {% for category in categories %}
             <div
                 class="category-card bg-green-600 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-green-700 transition-colors duration-300">
-                <h4 class="font-semibold">{{category}}</h4>
+                <h4 class="font-semibold">{{ category }}</h4>
             </div>
             {% endfor %}
         </div>
@@ -69,21 +91,24 @@
         <div class="container mx-auto px-4 text-center">
             <div class="text-xl font-bold">Follow Us</div>
             <div class="flex justify-center gap-6 mt-4">
-                <a href="#" class="text-gray-300 hover:text-white transition-all duration-300">
+                <a href="#"
+                    class="text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110">
                     <i class="fab fa-facebook"></i>
                 </a>
-                <a href="#" class="text-gray-300 hover:text-white transition-all duration-300">
+                <a href="#"
+                    class="text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110">
                     <i class="fab fa-twitter"></i>
                 </a>
-                <a href="#" class="text-gray-300 hover:text-white transition-all duration-300">
+                <a href="#"
+                    class="text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="text-gray-300 hover:text-white transition-all duration-300">
+                <a href="#"
+                    class="text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110">
                     <i class="fab fa-linkedin"></i>
                 </a>
             </div>
         </div>
     </footer>
 </main>
-
 {% endblock contents %}
