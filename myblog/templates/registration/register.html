@@ -1,60 +1,28 @@
-{% extends "registration/base.html" %} {% block title %}Register{% endblock
-title %} {% block contents %}
+{% extends "registration/base.html" %} {% block title %}Register{% endblock title %} {% block contents %}
 <h2 class="text-2xl font-bold text-gray-800 mb-4">Register</h2>
 <form action="{% url 'register' %}" method="post">
   {% csrf_token %}
   <div class="mb-2">
-    <label for="username" class="block text-gray-700 font-medium"
-      >Username</label
-    >
-    <input
-      type="text"
-      class="mt-2 w-full p-2 border rounded"
-      name="username"
-      id="username"
-      aria-label="Username"
-      aria-required="true"
-    />
+    <label for="username" class="block text-gray-700 font-medium">Username</label>
+    <input type="text" class="mt-2 w-full p-2 border rounded" name="username" id="username" aria-label="Username"
+      aria-required="true" />
   </div>
   <div class="mb-2">
     <label for="email" class="block text-gray-700 font-medium">Email</label>
-    <input
-      type="email"
-      class="mt-2 w-full p-2 border rounded"
-      name="email"
-      id="email"
-      aria-label="Email"
-      aria-required="true"
-    />
+    <input type="email" class="mt-2 w-full p-2 border rounded" name="email" id="email" aria-label="Email"
+      aria-required="true" />
   </div>
   <div class="mb-2" class="block text-gray-700 font-medium">
     <label for="password1">Password</label>
-    <input
-      type="password"
-      class="mt-2 w-full p-2 border rounded"
-      name="password1"
-      id="password1"
-      aria-label="Password"
-      aria-required="true"
-    />
+    <input type="password" class="mt-2 w-full p-2 border rounded" name="password1" id="password1" aria-label="Password"
+      aria-required="true" />
   </div>
   <div class="mb-2">
-    <label for="password2" class="block text-gray-700 font-medium"
-      >Confirm Password</label
-    >
-    <input
-      type="password"
-      class="mt-2 w-full p-2 border rounded"
-      name="password2"
-      id="password2"
-      aria-label="Confirm Password"
-      aria-required="true"
-    />
+    <label for="password2" class="block text-gray-700 font-medium">Confirm Password</label>
+    <input type="password" class="mt-2 w-full p-2 border rounded" name="password2" id="password2"
+      aria-label="Confirm Password" aria-required="true" />
   </div>
-  <button
-    type="submit"
-    class="rounded w-full py-2 px-4 mt-4 bg-green-500 text-white hover:bg-green-600"
-  >
+  <button type="submit" class="rounded w-full py-2 px-4 mt-4 bg-green-500 text-white hover:bg-green-600">
     Sign up
   </button>
 </form>

@@ -19,7 +19,8 @@ def register_view(request):
             messages.success(request, 'Registered successfully!')
             return redirect('home')
         else:
-            messages.error(request, 'Registraion failed. Please try again')
+            # messages.error(request, 'Registraion failed. Please try again')
+            messages.error(request, form.errors)
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form':form})
@@ -132,7 +133,6 @@ def edit_post_view(request, post_id):
             return redirect('post_detail', post_id)
         else:
             messages.error(request, "Failed to update post. Please try again")
-            return render(request, 'blogs/edit_detail.html', context)
     else:
         form = CreatePostForm(instance=post)
     
