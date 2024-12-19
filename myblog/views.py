@@ -90,7 +90,6 @@ def create_posts_view(request):
 
 
 # Post detail views
-@login_required
 def post_detail_view(request, post_id):
     post = get_object_or_404(Post.objects.prefetch_related('comments'), id=post_id, is_published=True)
     if request.method == "POST":
@@ -165,3 +164,7 @@ def edit_comment_view(request,  id):
     else:
         form = CommentForm(instance=comment)
     return render(request, 'blogs/edit_comment.html', {'form': form})
+
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
