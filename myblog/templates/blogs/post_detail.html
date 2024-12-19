@@ -1,7 +1,4 @@
-{% extends "blogs/base.html" %}
-{% block title %}{{ post.title }}{% endblock title %}
-
-{% block contents %}
+{% extends "blogs/base.html" %} {% block title %}{{ post.title }}{% endblock title %} {% block contents %}
 <article class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-20">
     <div class="text-end mb-2 relative">
         {% if post.author == user %}
@@ -13,7 +10,7 @@
     </div>
 
     {% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-56 object-cover mb-4 rounded-lg">
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-56 object-cover mb-4 rounded-lg" />
     {% endif %}
 
     <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ post.title }}</h1>
@@ -22,20 +19,19 @@
     </a>
     <p class="text-gray-600 text-sm mt-2">by {{ post.author }}</p>
     <p class="text-gray-600 mb-4 text-sm">Published: {{ post.created_at }}</p>
-    <div class="prose prose-lg text-gray-800">
-        {{ post.content|safe }}
-    </div>
+    <div class="prose prose-lg text-gray-800">{{ post.content|safe }}</div>
 
-    <hr class="mt-5 mb-1">
+    <hr class="mt-5 mb-1" />
     <section>
         <h2 class="text-xl text-gray-800 mb-3 font-bold">Comments</h2>
 
-        {% if comments %}
-        {% for comment in comments %}
-        <div class="border-b border-gray-200 bg-gray-100 px-4 py-2 mb-2 max-w-sm rounded-lg">
+        {% if comments %} {% for comment in comments %}
+        <div class="border-b border-gray-200 bg-gray-100 px-4 py-2 mb-2 max-w-100 rounded-lg">
             <div>
                 <div class="flex justify-between items-center mb-2">
-                    <p class="text-gray-800 font-bold text-lg mb-1">{{ comment.author }}</p>
+                    <p class="text-gray-800 font-bold text-lg mb-1">
+                        {{ comment.author }}
+                    </p>
                     {% if comment.author == user %}
                     <a href="{% url 'edit_comment' comment.id %}"
                         class="bg-green-500 text-white font-bold py-1 px-2 hover:bg-green-600 rounded shadow-md">
@@ -47,20 +43,19 @@
             </div>
             <p class="text-gray-600 text-xs mt-2">{{ comment.created_at }}</p>
         </div>
-        {% endfor %}
-        {% else %}
-        <p class="text-center text-gray-500 mb-2">No comments yet. Be the first to comment!</p>
+        {% endfor %} {% else %}
+        <p class="text-center text-gray-500 mb-2">
+            No comments yet. Be the first to comment!
+        </p>
         {% endif %}
     </section>
 
-    <hr class="mt-5 mb-4">
+    <hr class="mt-5 mb-4" />
     <section>
         <form method="post" class="mt-4">
             {% csrf_token %}
             <div class="mb-2">
-                {{ form.content }}
-
-                {% if form.content.errors %}
+                {{ form.content }} {% if form.content.errors %}
                 <p class="text-sm text-red-600 mt-2">{{ form.content.errors.0 }}</p>
                 {% endif %}
             </div>

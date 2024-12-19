@@ -131,7 +131,8 @@ def edit_post_view(request, post_id):
             messages.success(request, "Post updated successfully!")
             return redirect('post_detail', post_id)
         else:
-            messages.error(request, "Failed to update post. Please try again")
+            messages.error(request, form.errors)
+            # messages.error(request, "Failed to update post. Please try again")
     else:
         form = CreatePostForm(instance=post)
     

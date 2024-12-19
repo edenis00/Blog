@@ -60,6 +60,9 @@
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">First</a>
             <a href="?page={{ posts.previous_page_number }}"
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Previous</a>
+            {% else %}
+            <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">First</a>
+            <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">Previous</a>
             {% endif %}
 
             <span class="text-gray-700">Page {{ posts.number }} of {{ posts.paginator.num_pages }}</span>
@@ -69,6 +72,9 @@
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Next</a>
             <a href="?page={{ posts.paginator.num_pages }}"
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Last</a>
+            {% else %}
+            <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">Next</a>
+            <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">Last</a>
             {% endif %}
         </div>
     </div>

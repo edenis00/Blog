@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}My Blog{% endblock title %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body class="bg-gray-100 font-sans">
-    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+    <nav class="sticky top-0 left-0 right-0 bg-white shadow-md z-50">
       <div
         class="container mx-auto px-4 py-4 flex justify-between items-center"
       >
@@ -20,7 +24,7 @@
             <li>
               <a
                 href="{% url 'home' %}"
-                class="text-gray-800 hover:text-green-600 transition-all duration-300"
+                class="text-gray-800 hover:text-green-600 transition-colors duration-300"
                 >Home</a
               >
             </li>
@@ -65,7 +69,7 @@
             <li>
               <a
                 href="{% url 'register' %}"
-                class="text-gray-800 hover:text-gray-600 transition-all duration-300"
+                class="text-gray-800 hover:text-green-600 transition-all duration-300"
                 >Register</a
               >
             </li>
@@ -75,7 +79,6 @@
       </div>
     </nav>
 
-    <div class="pt-16"></div>
     {% if messages %}
     <div class="container mx-auto mt-2">
       {% for message in messages %}
