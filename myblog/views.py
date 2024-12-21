@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .models import Post, Category, Comment
@@ -169,3 +170,19 @@ def edit_comment_view(request,  id):
 
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
+
+
+def post_list_view(request):
+    query = request.GET.get('q')
+    
+    if query:
+        posts = Post.objects.filter( 
+                                    Q(title__icontains=query) | 
+                                    Q(content__icontains=query) |
+                                    Q(author__username__icontains=query) | 
+                                    Q(category__name__icontains=query)
+                                ).distinct().order_by('-created_at')
+    else:
+        posts = Post.objects.all().order_by('-created_at')
+        
+    return render(request, 'blogs/post_list.html', {'posts': posts})

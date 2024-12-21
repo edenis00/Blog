@@ -12,6 +12,7 @@
   </head>
 
   <body class="bg-gray-100 font-sans">
+    <!-- Navigation Bar -->
     <nav class="sticky top-0 left-0 right-0 bg-white shadow-md z-50">
       <div
         class="container mx-auto px-4 py-4 flex justify-between items-center"
@@ -19,8 +20,7 @@
         <a href="#" class="text-2xl font-bold text-green-600">My Blog</a>
         <div>
           {% if user.is_authenticated %}
-
-          <ul class="flex gap-6">
+          <ul class="flex gap-6 items-center">
             <li>
               <a
                 href="{% url 'home' %}"
@@ -37,17 +37,32 @@
             </li>
             <li>
               <a
-                href="#categories"
-                class="text-gray-800 hover:text-green-600 transition-all duration-300"
-                >Categories</a
-              >
-            </li>
-            <li>
-              <a
                 href="#about"
                 class="text-gray-800 hover:text-green-600 transition-all duration-300"
                 >About</a
               >
+            </li>
+            <li>
+              <form
+                action="{% url 'post_list' %}"
+                method="get"
+                class="flex items-center"
+              >
+                <input
+                  type="text"
+                  name="q"
+                  id="search"
+                  placeholder="Search..."
+                  class="px-2 max-w-sm rounded py-1 border"
+                  value="{{ request.GET.q }}"
+                />
+                <button
+                  type="submit"
+                  class="bg-green-500 text-white px-2 py-1 hover:bg-green-600 rounded ml-2"
+                >
+                  Search
+                </button>
+              </form>
             </li>
             <li>
               <a
@@ -73,26 +88,53 @@
                 >Register</a
               >
             </li>
+            <li>
+              <form
+                action="{% url 'post_list' %}"
+                method="get"
+                class="flex items-center"
+              >
+                <input
+                  type="text"
+                  name="q"
+                  id="search"
+                  placeholder="Search..."
+                  class="px-2 max-w-sm rounded py-1 border"
+                  value="{{ request.GET.q }}"
+                />
+                <button
+                  type="submit"
+                  class="bg-green-500 text-white px-2 py-1 hover:bg-green-600 rounded ml-2"
+                >
+                  Search
+                </button>
+              </form>
+            </li>
           </ul>
           {% endif %}
         </div>
       </div>
     </nav>
 
+    <!-- Messages -->
     {% if messages %}
     <div class="container mx-auto mt-2">
       {% for message in messages %}
       <div
-        class="{% if message.tags == 'success' %} bg-green-100 text-green-800 border-green-300 {% elif message.tags == 'error'%} bg-red-100 text-red-800 border-red-300 {% else %} bg-gray-100 text-gray-800 border-gray-300 {% endif %} border-l-4 p-4 mb-5 rounded"
+        class="{% if message.tags == 'success' %} bg-green-100 text-green-800 border-green-300 {% elif message.tags == 'error' %} bg-red-100 text-red-800 border-red-300 {% else %} bg-gray-100 text-gray-800 border-gray-300 {% endif %} border-l-4 p-4 mb-5 rounded"
         role="alert"
       >
         <p>{{ message }}</p>
       </div>
       {% endfor %}
     </div>
-    {% endif %} {% block contents %}{% endblock contents %}
+    {% endif %}
 
-    <footer class="py-4">
+    <!-- Content Block -->
+    {% block contents %}{% endblock contents %}
+
+    <!-- Footer -->
+    <footer class="py-2">
       <div class="container mx-auto px-4 text-center">
         <p class="text-sm">2024 My Blog. All rights reserved.</p>
       </div>

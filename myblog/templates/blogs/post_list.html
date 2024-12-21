@@ -1,0 +1,36 @@
+{% extends "blogs/base.html" %} {% block title %}Search{% endblock title %}
+{% block contents %}
+<div class="w-[98%] mx-auto mt-5 py-2 px-4 rounded  bg-white">
+    <form action="{% url 'post_list' %}" method="get" class=" text-center mb-10 mt-2">
+        <input type="text" name="q" id="search" placeholder="Search...."
+            class="px-4 w-[90%] shadow-md rounded py-2 border" value="{{ request.GET.q }}">
+        <button type="submit"
+            class="bg-green-500 text-white px-4 py-2 border hover:bg-green-600 rounded">Search</button>
+    </form>
+    {% if posts %}
+    {% for post in posts %}
+    <div class="shadow-md rounded mb-4 ">
+        <div class="bg-green-500 px-4 py-2 w-full flex rounded justify-between relative">
+            <div>
+                <a href="{% url 'post_detail' post.id %}" class="text-white text-2xl font-bold block mb-1">
+                    {{post.title}}</a>
+                <a href="#" class="bg-white px-2 py-1 text-green-800 font-medium rounded">
+                    {{post.category}}</a>
+                <p class="text-white text-xs mt-2">
+                    Published by {{ post.author }}
+                </p>
+            </div>
+            <div>
+                <p class="text-xs text-white">Published on: {{ post.created_at|date:"D, M d, Y" }}</p>
+            </div>
+        </div>
+        <p class="px-6 py-4">{{ post.content|truncatewords:30 }}</p>
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <p class="text-center text-gray-800 mb-5">No posts found</p>
+</div>
+
+{% endif %}
+{% endblock contents %}

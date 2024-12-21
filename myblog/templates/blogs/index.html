@@ -61,7 +61,6 @@
             <a href="?page={{ posts.previous_page_number }}"
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Previous</a>
             {% else %}
-            <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">First</a>
             <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">Previous</a>
             {% endif %}
 
@@ -74,7 +73,6 @@
                 class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all">Last</a>
             {% else %}
             <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">Next</a>
-            <a href="#" class="px-4 py-2 bg-gray-400 text-gray-700 rounded-md cursor-not-allowed">Last</a>
             {% endif %}
         </div>
     </div>
@@ -92,11 +90,34 @@
         </div>
     </div>
 
+    <!-- About Page -->
+    <section class="max-w-4xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">About Me</h1>
+        <p class="text-gray-600 leading-relaxed">
+            Hey there! My name is Elijah (but you can call me El). I'm a student of Electronics Technology Education,
+            currently exploring the exciting world of programming and development.
+        </p>
+        <p class="text-gray-600 leading-relaxed mt-4">
+            This blog is my personal space where I share my programming journey, projects, and thoughts on tech. I
+            started this blog to document my learning process and, hopefully, inspire others who are also starting their
+            journey.
+        </p>
+        <p class="text-gray-600 leading-relaxed mt-4">
+            When I'm not coding, you'll probably find me watching anime, working on electronics, or exploring new ideas
+            to stay creative. Fun fact: I'm also into fitness and trying to stay fit with some cool workout routines.
+        </p>
+        <p class="text-gray-600 leading-relaxed mt-4">
+            Thanks for visiting my blog—feel free to connect with me or share your thoughts on my posts!
+        </p>
+        <a href="mailto:your-email@example.com" class="text-blue-500 hover:underline">Email Me</a>
+    </section>
+
+
     <!-- Footer with social links -->
-    <footer class="bg-gray-800 text-white py-6 mt-12">
+    <footer class="bg-gray-800 text-white py-2 px-4 mt-12 bottom-1">
         <div class="container mx-auto px-4 text-center">
             <div class="text-xl font-bold">Follow Us</div>
-            <div class="flex justify-center gap-6 mt-4">
+            <div class="flex justify-center gap-6 mt-1">
                 <a href="#"
                     class="text-gray-300 hover:text-white transition-all duration-300 transform hover:scale-110">
                     <i class="fab fa-facebook"></i>
